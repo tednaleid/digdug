@@ -14,9 +14,9 @@ impl Args {
     }
 
     pub fn parse_from<I, T>(itr: I) -> Result<Self>
-    where
-        I: IntoIterator<Item = T>,
-        T: Into<OsString> + Clone,
+        where
+            I: IntoIterator<Item=T>,
+            T: Into<OsString> + Clone,
     {
         let matches = App::new("digdug")
             .arg(
@@ -37,12 +37,13 @@ impl Args {
 mod tests {
     use super::*;
     use anyhow::Result;
+    use std::net::Ipv4Addr;
 
     #[test]
     fn parse_method_success() -> Result<()> {
         assert_eq!(
-            Args::parse_from(vec!["digdug", "127.0.0.1"])?.address,
-            "127.0.0.1"
+            Args::parse_from(vec!["digdug", "127.0.0.1"])?.ip_address,
+            IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1))
         );
         Ok(())
     }
